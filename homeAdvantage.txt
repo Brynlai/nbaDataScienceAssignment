@@ -1,0 +1,38 @@
+# Set working directory first !!
+setwd("C:/Users/wbrya/OneDrive/Documents/nbaData/large/csv") # Change to your working directory.
+getwd()
+
+# Load libraries
+library(readr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+
+# Read data from CSV
+data <- read_csv("game.csv")
+
+# Filter data where points scored are not missing for both home and away teams
+filtered_data <- data %>%
+  filter(!is.na(pts_home) & !is.na(pts_away))
+
+# Calculate summary statistics for points scored in home and away games
+summary_stats <- filtered_data %>%
+  summarise(mean_pts_home = mean(pts_home),
+            mean_pts_away = mean(pts_away),
+            median_pts_home = median(pts_home),
+            median_pts_away = median(pts_away),
+            sd_pts_home = sd(pts_home),
+            sd_pts_away = sd(pts_away))
+
+# Print summary statistics
+print(summary_stats)
+
+# Visualize the comparison using box plots
+ggplot(filtered_data, aes(x = factor(1), y = pts_home)) +
+  geom_boxplot(fill = "blue", alpha = 0.5) +
+  geom_boxplot(aes(x = factor(2), y = pts_away), fill = "red", alpha = 0.5) +
+  labs(title = "Comparison of Points Scored between Home and Away Games",
+       x = NULL,
+       y = "Points Scored") +
+  scale_x_discrete(labels = c("Home", "Away")) +
+  theme_minimal()
