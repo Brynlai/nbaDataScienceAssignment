@@ -1,0 +1,58 @@
+# Set working directory first !!
+setwd("C:/Users/wbrya/OneDrive/Documents/nbaData/player_stats_season") # Change to your working directory.
+getwd()
+# Load libraries
+library(readr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+
+# Read data from CSV
+data <- read_csv("all_seasons.csv")
+
+# Print column names
+print(colnames(data))
+
+# Preview the first few rows of the data
+print(head(data))
+
+# Data cleaning and transformation
+data <- data %>%
+  # Change class of player_height and player_weight to numeric
+  mutate(player_height = as.numeric(as.character(player_height)),
+         player_weight = as.numeric(as.character(player_weight))) %>%
+  # Standardize column names (replace spaces with underscores)
+  rename_with(~gsub(" ", "_", .x)) %>%
+  # Standardize country names
+  mutate(country = recode(country,
+                          "United States" = "USA",
+                          "USSR" = "Russia",
+                          "Yugoslavia" = "Serbia",
+                          "Serbia and Montenegro" = "Serbia",
+                          "St. Vincent & Grenadines" = "St. Vincent and Grenadines",
+                          "US Virgin Islands" = "US Virgin Islands",
+                          "U.S. Virgin Islands" = "US Virgin Islands",
+                          "UK" = "United Kingdom",
+                          "Great Britain" = "United Kingdom",
+                          "DRC" = "Congo",
+                          "Republic of the Congo" = "Congo",
+                          "Democratic Republic of the Congo" = "Congo")) %>%
+  # Convert draft_year to numeric
+  mutate(draft_year = as.numeric(as.character(draft_year))) %>%
+  # Clean the college column
+  mutate(college = tolower(gsub("[^A-Za-z0-9 ]", "", college)))
+
+# Check for duplicates
+duplicate_rows <- data %>%
+  filter(duplicated(data))
+
+if (nrow(duplicate_rows) > 0) {
+  print("Duplicate rows found:")
+  print(duplicate_rows)
+} else {
+  print("No duplicate rows found.")
+}
+
+# Print final column names
+print(colnames(data))
+print(head(data,20))
