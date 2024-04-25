@@ -1,0 +1,70 @@
+# Set working directory first !!
+setwd("C:/Users/wbrya/OneDrive/Documents/nbaData/useful") # Change to your working directory.
+getwd()
+
+# Load libraries
+library(readr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+
+# Read data from CSV
+data <- read_csv("game.csv")
+
+
+# TASK 2: Data Selection
+# View dataset dimensions
+print(dim(data))
+
+# View column names
+print(colnames(data))
+
+# TASK 3: Data Cleaning
+# 1. Filter data by date range
+data <- data %>%
+  filter(game_date >= as.Date("1983-12-31") & game_date <= as.Date("2023-06-13"))
+
+# 2. Remove all data except needed ones.
+# game_date
+# fg3a_home, fg3a_away
+needed_columns <- c("game_date", "fg3a_home", "fg3a_away")
+
+cleaned_data <- data %>% select(one_of(needed_columns))
+data <- cleaned_data
+
+# 3. Only take attempts more than 0 and avoid negative number
+data <- data %>%
+  filter(fg3a_home > 1 & fg3a_away > 1)
+
+# 4. Remove rows with missing values
+data <- data %>%
+  filter(!is.na(fg3a_home) & !is.na(fg3a_away))
+
+
+# TASK 4: Statistical Methods - Mean - Median Mode
+# Show Minimum, Maximum, Median, Mean, 1st Quartile and 3rd Quartile
+print(summary(data))
+
+
+# TASK 6: Visualization
+# Calculate year from game_date
+data <- data %>%
+  mutate(year = lubridate::year(game_date))
+
+# Aggregate median of 3-point attempts per year for both home and away teams
+total_attempts <- data %>%
+  group_by(year) %>%
+  summarize(median_fg3a_home = median(fg3a_home),
+            median_fg3a_away = median(fg3a_away))
+
+# - Visualization: Line Chart
+# Plot linear graph of median 3-point attempts over years for both home and away teams
+ggplot(total_attempts, aes(x = year)) +
+  geom_line(aes(y = median_fg3a_home), color = "blue") +
+  geom_line(aes(y = median_fg3a_away), color = "red") +
+  geom_smooth(aes(y = median_fg3a_home), method = "lm", color = "blue", se = FALSE) +
+  geom_smooth(aes(y = median_fg3a_away), method = "lm", color = "red", se = FALSE) +
+  labs(title = "Median 3-Point Attempts Over Years",
+       x = "Year",
+       y = "Median 3-Point Attempts") +
+  theme_minimal()
