@@ -20,31 +20,29 @@ print(dim(data))
 print(colnames(data))
 
 # TASK 3: Data Cleaning
-# Filter data by date range
+# 1. Filter data by date range
 data <- data %>%
   filter(game_date >= as.Date("1983-12-31") & game_date <= as.Date("2023-06-13"))
 
+# 2. Remove all data except needed ones.
+# game_date
+# fg3a_home, fg3a_away
+needed_columns <- c("game_date", "fg3a_home", "fg3a_away")
 
+cleaned_data <- data %>% select(one_of(needed_columns))
+data <- cleaned_data
 
-# !!!Remove all data except needed ones.!!!
-
-# Remove 
+# 3. Only take attempts more than 0 and avoid negative number
 data <- data %>%
-  filter(fg3a_home >= 2 & fg3a_away >= 2)
+  filter(fg3a_home > 1 & fg3a_away > 1)
 
-# Remove rows with missing values
+# 4. Remove rows with missing values
 data <- data %>%
-  filter(!is.na(fg3_pct_home) & !is.na(fg3_pct_away))
+  filter(!is.na(fg3a_home) & !is.na(fg3a_away))
 
-
-# Remove rows where fg3_pct_home or fg3_pct_away equals 1 or 0
-data <- data %>%
-  filter(fg3_pct_home != 1 & fg3_pct_home != 0 &
-           fg3_pct_away != 1 & fg3_pct_away != 0)
-
-# !!!Remove Duplicate?!!!
 
 # TASK 4: Statistical Methods - Mean - Median Mode
+# Show Minimum, Maximum, Median, Mean, 1st Quartile and 3rd Quartile
 print(summary(data))
 
 
