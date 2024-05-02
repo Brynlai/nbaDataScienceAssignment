@@ -26,7 +26,7 @@ print(dim(data))
 
 # 1. Filter data by date range
 data <- data %>%
-  filter(game_date >= as.Date("1983-12-31") & game_date <= as.Date("2023-06-13"))
+  filter(game_date > as.Date("1983-12-31"))
 
 # 2. Remove all data except needed ones.
 # game_date
