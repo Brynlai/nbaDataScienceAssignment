@@ -20,6 +20,10 @@ print(dim(data))
 print(colnames(data))
 
 # TASK 3: Data Cleaning
+# Print before cleanning dimensions
+print("BEFORE CLEANING:")
+print(dim(data))
+
 # 1. Filter data by date range
 data <- data %>%
   filter(game_date >= as.Date("1983-12-31") & game_date <= as.Date("2023-06-13"))
@@ -43,6 +47,10 @@ data <- data %>%
 # 5. Remove duplicate entries based on "game_id"
 data <- data %>%
   distinct(game_id, .keep_all = TRUE)
+
+# Print after cleanning dimensions
+print("AFTER CLEANING:")
+print(dim(data))
 
 
 # TASK 4: Statistical Methods - Mean - Median Mode
