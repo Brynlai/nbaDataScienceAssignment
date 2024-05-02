@@ -40,6 +40,10 @@ data <- data %>%
 data <- data %>%
   filter(!is.na(fg3a_home) & !is.na(fg3a_away))
 
+# 5. Remove duplicate entries based on "game_id"
+data <- data %>%
+  distinct(game_id, .keep_all = TRUE)
+
 
 # TASK 4: Statistical Methods - Mean - Median Mode
 # Show Minimum, Maximum, Median, Mean, 1st Quartile and 3rd Quartile
