@@ -37,7 +37,7 @@ data <- data %>%
 # 2. Remove all data except needed ones.
 # game_date
 # fg3a_home, fg3a_away
-needed_columns <- c("game_date", "fg3a_home", "fg3a_away")
+needed_columns <- c("game_id","game_date", "fg3a_home", "fg3a_away")
 
 cleaned_data <- data %>% select(one_of(needed_columns))
 data <- cleaned_data
