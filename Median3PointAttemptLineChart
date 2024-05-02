@@ -38,7 +38,7 @@ data <- cleaned_data
 
 # 3. Only take attempts more than 0 and avoid negative number
 data <- data %>%
-  filter(fg3a_home > 1 & fg3a_away > 1)
+  filter(fg3a_home > 0 & fg3a_away > 0)
 
 # 4. Remove rows with missing values
 data <- data %>%
