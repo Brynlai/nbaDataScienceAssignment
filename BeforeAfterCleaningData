@@ -30,9 +30,13 @@ ggplot(data = data, aes(x = game_date, y = fg3a_home)) +
 
 
 # TASK 3: Data Cleaning
+# Print before cleanning dimensions
+print("BEFORE CLEANING:")
+print(dim(data))
+
 # 1. Filter data by date range
 data <- data %>%
-  filter(game_date >= as.Date("1983-12-31") & game_date <= as.Date("2023-06-13"))
+  filter(game_date > as.Date("1983-12-31"))
 
 # 2. Remove all data except needed ones.
 # game_date
@@ -44,7 +48,7 @@ data <- cleaned_data
 
 # 3. Only take attempts more than 0 and avoid negative number
 data <- data %>%
-  filter(fg3a_home > 1 & fg3a_away > 1)
+  filter(fg3a_home > 0 & fg3a_away > 0)
 
 # 4. Remove rows with missing values
 data <- data %>%
@@ -53,6 +57,11 @@ data <- data %>%
 # 5. Remove duplicate entries based on "game_id"
 data <- data %>%
   distinct(game_id, .keep_all = TRUE)
+
+# Print after cleanning dimensions
+print("AFTER CLEANING:")
+print(dim(data))
+
 
 
 # TASK 4: Statistical Methods - Mean - Median Mode
