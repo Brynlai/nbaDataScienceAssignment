@@ -51,7 +51,7 @@ print("AFTER CLEANING:")
 print(dim(data))
 
 
-# TASK 4: Statistical Methods - Mean - Median Mode
+# TASK 4: Statistical Methods
 # Show Minimum, Maximum, Median, Mean, 1st Quartile and 3rd Quartile
 print(summary(data))
 
