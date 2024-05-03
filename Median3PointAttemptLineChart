@@ -29,11 +29,8 @@ print(dim(data))
 data <- data %>%
   filter(game_date > as.Date("1983-12-31"))
 
-# 2. Remove all data except needed ones.
-# game_date
-# fg3a_home, fg3a_away
+# 2. Remove all unneeded columns 
 needed_columns <- c("game_id","game_date", "fg3a_home", "fg3a_away")
-
 cleaned_data <- data %>% select(one_of(needed_columns))
 data <- cleaned_data
 
