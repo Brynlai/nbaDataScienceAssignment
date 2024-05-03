@@ -2,6 +2,7 @@
 setwd("C:/Users/wbrya/OneDrive/Documents/nbaData/useful") # Change to your working directory.
 getwd()
 
+
 # Load libraries
 library(readr)
 library(dplyr)
@@ -68,6 +69,10 @@ total_attempts <- data %>%
   group_by(year) %>%
   summarize(median_fg3a_home = median(fg3a_home),
             median_fg3a_away = median(fg3a_away))
+
+print("Total Attempts Summmary:")
+print(n = 20,head(total_attempts,20))
+
 
 # - Visualization: Line Chart
 # Plot linear graph of median 3-point attempts over years for both home and away teams
