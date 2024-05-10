@@ -84,9 +84,6 @@ print(summary(relation))
 
 
 # TASK 6: Visualization
-
-
-
 # - Visualization: Line Chart
 # Plot linear graph of median 3-point attempts over years for both home and away teams
 ggplot(total_attempts, aes(x = year)) +
