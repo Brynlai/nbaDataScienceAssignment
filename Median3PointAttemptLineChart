@@ -52,14 +52,12 @@ print(dim(data))
 
 
 # TASK 4: Statistical Methods
-# Show Minimum, Maximum, Median, Mean, 1st Quartile and 3rd Quartile
-print(summary(data))
-
-
-# TASK 6: Visualization
 # Calculate year from game_date
 data <- data %>%
   mutate(year = lubridate::year(game_date))
+
+# Show Minimum, Maximum, Median, Mean, 1st Quartile and 3rd Quartile
+print(summary(data))
 
 # Aggregate median of 3-point attempts per year for both home and away teams
 total_attempts <- data %>%
@@ -67,8 +65,26 @@ total_attempts <- data %>%
   summarize(median_fg3a_home = median(fg3a_home),
             median_fg3a_away = median(fg3a_away))
 
-print("Total Attempts Summmary:")
-print(n = 20,head(total_attempts,20))
+print("Head of Total Attempts Summmary:")
+print(n = 10,head(total_attempts,10))
+
+print("Tail of Total Attempts Summmary:")
+print(n = 10,tail(total_attempts,10))
+
+# Summary of total_attempts
+print(summary(total_attempts))
+
+# Linear Regression
+x <- as.numeric(unlist(total_attempts["year"]))
+y <- as.numeric(unlist(total_attempts["median_fg3a_home"]))
+relation <- lm(y~x)
+print(summary(relation))
+
+
+
+
+# TASK 6: Visualization
+
 
 
 # - Visualization: Line Chart
@@ -82,3 +98,5 @@ ggplot(total_attempts, aes(x = year)) +
        x = "Year",
        y = "Median 3-Point Attempts") +
   theme_minimal()
+
+
