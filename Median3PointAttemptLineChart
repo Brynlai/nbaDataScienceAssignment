@@ -50,6 +50,14 @@ data <- data %>%
 print("AFTER CLEANING:")
 print(dim(data))
 
+# Show data types and other information
+print(str(data))
+
+# Show Minimum, Maximum, Median, Mean, 1st Quartile and 3rd Quartile
+print(summary(data))
+
+
+
 
 # TASK 4: Statistical Methods
 # Calculate year from game_date
@@ -73,6 +81,9 @@ print(n = 10,tail(total_attempts,10))
 
 # Summary of total_attempts
 print(summary(total_attempts))
+
+# Show data types and other information
+print(str(total_attempts))
 
 # Linear Regression
 x <- as.numeric(unlist(total_attempts["year"]))
